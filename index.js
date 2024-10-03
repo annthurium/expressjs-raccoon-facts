@@ -9,8 +9,6 @@ require("dotenv").config();
 const app = express();
 app.set("view engine", "pug");
 
-// app.use(serveStatic(path.join(__dirname, "public")));
-
 const sdkKey = process.env.LAUNCHDARKLY_SDK_KEY;
 const ldClient = ld.init(sdkKey);
 

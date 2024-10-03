@@ -12,6 +12,13 @@ app.set("view engine", "pug");
 const sdkKey = process.env.LAUNCHDARKLY_SDK_KEY;
 const ldClient = ld.init(sdkKey);
 
+const getRaccoonFact = async function (apiVersion) {
+  const url = `https://versioned-api.onrender.com/v${apiVersion}/fact/`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
 app.get("/", async function (req, res) {
   const context = {
     kind: "user",
@@ -24,7 +31,9 @@ app.get("/", async function (req, res) {
     0
   );
 
-  res.render("index.pug", { name: "John Doe", age: 21 });
+  const raccoonFact = await getRaccoonFact(apiVersion);
+
+  res.render("index.pug", { raccoonFact, apiVersion });
 });
 
 const port = 3000;
